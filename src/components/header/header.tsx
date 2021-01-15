@@ -12,7 +12,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 
-import { AuthContext } from '../../context/auth-context';
+import Drawer from "./drawer";
+import {AuthContext} from '../../context/auth-context';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,6 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
       paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
       transition: theme.transitions.create('width'),
       width: '100%',
@@ -132,6 +134,7 @@ function Header() {
     <div>
       <AppBar position="fixed">
         <Toolbar>
+          <Drawer />
           <Typography className={classes.title} variant="h6" noWrap>
             <Link className={classes.titleLink} component={RouterLink} to="/">
               Movies
