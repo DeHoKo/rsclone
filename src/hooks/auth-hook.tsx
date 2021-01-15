@@ -20,7 +20,7 @@ export const useAuth = () => {
     localStorage.setItem(
       'userData',
       JSON.stringify({
-        userEmail: userEmail,
+        userEmail: uemail,
         userId: uid,
         token: token,
         expiration: tokenExpirationDate.toISOString()
