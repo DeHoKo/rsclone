@@ -8,6 +8,7 @@ import Header from './components/header/header';
 import Main from './components/main/main';
 import Footer from './components/footer/footer';
 import SignUp from './components/auth/signup';
+import SignIn from './components/auth/signin';
 
 import { AuthContext } from './context/auth-context';
 import { useAuth } from './hooks/auth-hook';
@@ -28,6 +29,9 @@ function App() {
     >
       <Header />
       <Switch>
+        <Route path="/signin">
+          <SignIn />
+        </Route>
         <Route path="/signup">
           <SignUp />
         </Route>
