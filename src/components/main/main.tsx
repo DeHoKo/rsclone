@@ -9,6 +9,8 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
+import MoviesList from './movies-list/moviesList';
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: any;
@@ -109,7 +111,10 @@ function Main() {
         </Tabs>
       </AppBar>
       {CATEGORIES.map((_, index) => {
-        return (<TabPanel key={index} value={value} index={index}></TabPanel>);
+        return (
+          <TabPanel key={index} value={value} index={index}>
+            <MoviesList />
+          </TabPanel>);
       })}
     </main>
   );
