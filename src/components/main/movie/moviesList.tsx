@@ -41,8 +41,10 @@ function MoviesList() {
     const [data, setData] = useState([]);
     const [count, setPagesCount] = useState(10);
     const {sendRequest} = useHttpClient();
+    const [page, setPage] = useState(1)
+
     useEffect(() => {
-        getMovies(sendRequest, 'movie', {sort_by: 'popularity.asc'}, 1)
+        getMovies(sendRequest, 'movie', {sort_by: 'popularity.asc'}, page)
             .then((response) => {
                 console.log(response)
                 const {results, total_pages} = response;
@@ -69,15 +71,15 @@ function MoviesList() {
                                 <Typography gutterBottom variant="h5" component="h2">
                                     {card['title']}
                                 </Typography>
-                                    <Box
-                                        component="p"
-                                        textOverflow="ellipsis"
-                                        overflow="hidden"
-                                        whiteSpace='nowrap'
-                                        bgcolor="background.paper"
-                                    >
-                                        {card['overview']}
-                                    </Box>
+                                <Box
+                                    component="p"
+                                    textOverflow="ellipsis"
+                                    overflow="hidden"
+                                    whiteSpace='nowrap'
+                                    bgcolor="background.paper"
+                                >
+                                    {card['overview']}
+                                </Box>
                             </CardContent>
                             <CardActions>
                                 <Button size="small" color="primary">
