@@ -5,6 +5,11 @@ import Pagination from '@material-ui/lab/Pagination';
 import PaginationItem from '@material-ui/lab/PaginationItem';
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
+interface PaginationPropsType{
+    count: number,
+    // onPageChange: (pageNumber: number) => void;
+}
+
 const useStyles = makeStyles(
   (theme: Theme) =>
     createStyles({
@@ -16,7 +21,7 @@ const useStyles = makeStyles(
     }),
 );
 
-function PaginationLink() {
+function PaginationLink({ count = 10, }:PaginationPropsType) {
   const classes = useStyles();
 
   return (
@@ -28,7 +33,8 @@ function PaginationLink() {
           <Pagination
             className={classes.pagination}
             page={page}
-            count={10}
+            count={count}
+            // onChange={onPageChange}
             renderItem={(item) => (
               <PaginationItem
                 component={Link}
