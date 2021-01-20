@@ -13,8 +13,8 @@ type Configuration = {
     poster_sizes: string[],
     profile_sizes: string[],
     still_sizes: string[],
-    change_keys: string[],
   }
+  change_keys: string[],
 }
 
 interface VideoInfo {
@@ -73,16 +73,9 @@ interface QueryParametersTVShows extends QueryParameters {
 
 // It is recommended you cache this data within your application and check for updates every few days
 export async function getConfiguration(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>) {
-  const response = await fetchFn(`https://api.themoviedb.org/3/configuration?api_key=${process.env.REACT_APP_THE_MOVIE_DB_API_KEY}`);
-  if (response.ok) {
-    const data = await response.json();
-    const base_url = data.images.base_url;
-    const file_size = 'w300';
-    return {
-      base_url,
-      file_size,
-    }
-  } else {
+  try {
+    return await fetchFn(`https://api.themoviedb.org/3/configuration?api_key=${process.env.REACT_APP_THE_MOVIE_DB_API_KEY}`) as Configuration;
+  } catch (e) {
     throw new Error('Something went wrong');
   }
 }
