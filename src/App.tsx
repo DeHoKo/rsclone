@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     getConfiguration(sendRequest).then(data => setApiConfig(data));
-  }, []);
+  }, [sendRequest]);
 
   return (
     <AuthContext.Provider
