@@ -1,8 +1,8 @@
 // 401 || 404
-type BadResult = {
-  status_message: string,
-  status_code: number,
-}
+// type BadResult = {
+//   status_message: string,
+//   status_code: number,
+// }
 
 type Configuration = {
   images: {
@@ -17,17 +17,17 @@ type Configuration = {
   change_keys: string[],
 }
 
-interface VideoInfo {
-  poster_path: string | null,
-  id: number,
-  overview: string,
-  vote_average: number,
-  genre_ids: number[],
-  vote_count: number,
-  original_language: string,
-  backdrop_path: string | null,
-  popularity: number,
-}
+// interface VideoInfo {
+//   poster_path: string | null,
+//   id: number,
+//   overview: string,
+//   vote_average: number,
+//   genre_ids: number[],
+//   vote_count: number,
+//   original_language: string,
+//   backdrop_path: string | null,
+//   popularity: number,
+// }
 
 // // https://developers.themoviedb.org/3/discover/movie-discover
 // export interface MovieInfo extends VideoInfo {
