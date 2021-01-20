@@ -12,6 +12,8 @@ import SignIn from './components/auth/signin';
 
 import { AuthContext } from './context/auth-context';
 import { useAuth } from './hooks/auth-hook';
+import Movie from "./components/main/movie/Movie";
+import MoviesList from "./components/main/movie/moviesList";
 
 function App() {
   const { token, login, logout, userId, userEmail } = useAuth();
@@ -37,6 +39,12 @@ function App() {
         </Route>
         <Route path="/">
           <Main />
+        </Route>
+        <Route path="/movies/:movieId">
+          <Movie />
+        </Route>
+        <Route exact path="/movies/categories/:categoryId">
+          <MoviesList />
         </Route>
       </Switch>
       <Footer />
