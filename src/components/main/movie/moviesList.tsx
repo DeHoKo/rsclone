@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const IMAGES_URL = 'https://image.tmdb.org/t/p/w500';
 
 function MoviesList() {
@@ -41,7 +41,9 @@ function MoviesList() {
     const [data, setData] = useState([]);
     const [count, setPagesCount] = useState(10);
     const {sendRequest} = useHttpClient();
-    const [page, setPage] = useState(1)
+    // FIXME: setPage is defined but never used
+    //        const [page, setPage] = useState(1)
+    const page = 1;
 
     useEffect(() => {
         getMovies(sendRequest, 'movie', {sort_by: 'popularity.asc'}, page)
@@ -51,9 +53,7 @@ function MoviesList() {
                 setPagesCount(total_pages)
                 setData(results)
             });
-        setPagesCount(count)
-        setData(data)
-    }, [])
+    }, [page, sendRequest])
 
     return (
         <Container className={classes.cardGrid} maxWidth="lg">
