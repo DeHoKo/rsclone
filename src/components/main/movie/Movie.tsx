@@ -4221,7 +4221,8 @@ function Movie() {
                     <Divider className={classes.divider} orientation="vertical" flexItem/>
                     <Box component={'div'}>
                         <Box component={'div'}>
-                            <Typography component='h1' gutterBottom>{object.title}</Typography>
+                            <Typography component='h1'
+                                        gutterBottom>{object.title} ({new Date(object.release_date).getFullYear()})</Typography>
                             <Typography component='h3'
                                         gutterBottom>{object.release_date} ({object.production_countries.map((pc) => pc.iso_3166_1).join()})
                             </Typography>
