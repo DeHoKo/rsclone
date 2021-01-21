@@ -22,11 +22,15 @@ import { getConfiguration } from './api/API';
 
 function App() {
   const { token, login, logout, userId, userEmail } = useAuth();
-  const { sendRequest, isLoading } = useHttpClient();
+  const { sendRequest } = useHttpClient();
+  const [isLoading, setIsLoading] = useState(true);
   const [apiConfig, setApiConfig] = useState({});
 
   useEffect(() => {
-    getConfiguration(sendRequest).then(data => setApiConfig(data));
+    getConfiguration(sendRequest).then(data => {
+      setApiConfig(data);
+      setIsLoading(false);
+    });
   }, [sendRequest]);
 
   return (
