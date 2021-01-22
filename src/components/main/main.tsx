@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import {makeStyles, Theme} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -8,8 +8,8 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-
-import MoviesList from './movies-list/moviesList';
+// import Movie from "./movie/Movie";
+import MoviesList from "./movie/moviesList";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -17,7 +17,7 @@ interface TabPanelProps {
   value: any;
 }
 
-function TabPanel(props: TabPanelProps) {
+export function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -37,7 +37,7 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-function a11yProps(index: any) {
+export function a11yProps(index: any) {
   return {
     id: `scrollable-auto-tab-${index}`,
     'aria-controls': `scrollable-auto-tabpanel-${index}`,
@@ -114,6 +114,7 @@ function Main() {
         return (
           <TabPanel key={index} value={value} index={index}>
             <MoviesList />
+            {/*<Movie key={0} />*/}
           </TabPanel>);
       })}
     </main>

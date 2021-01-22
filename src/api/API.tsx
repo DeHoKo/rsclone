@@ -4,6 +4,7 @@
 //   status_code: number,
 // }
 
+
 type Configuration = {
   images: {
     base_url: string,
