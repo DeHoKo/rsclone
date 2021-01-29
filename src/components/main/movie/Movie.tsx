@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     AppBar,
     Avatar,
@@ -21,6 +21,9 @@ import CastItem from "./CastItem";
 import ImageCard from "./ImageCard";
 import {a11yProps, TabPanel} from "../main";
 import Divider from "@material-ui/core/Divider";
+import {getMovie, getMovies} from "../../../api/API";
+import {useHttpClient} from "../../../hooks/http-hook";
+import {useParams} from 'react-router-dom';
 
 const IMAGES_URL = 'https://image.tmdb.org/t/p/w500';
 
@@ -4136,6 +4139,7 @@ const images = {
 }
 
 function Movie() {
+    debugger
     const useStyles = makeStyles((theme: Theme) => ({
         root: {
             backgroundColor: theme.palette.primary.main,
@@ -4201,6 +4205,19 @@ function Movie() {
 
     const classes = useStyles();
     const [value, setValue] = useState(0);
+    const [movieId, setMovieId] = useState(0);
+    const {sendRequest} = useHttpClient();
+    console.log('params',useParams());
+    useEffect(() => {
+        getMovie(sendRequest, movieId)
+            .then((response) => {
+                console.log(response)
+                // const {results, total_pages} = response;
+                // setPagesCount(total_pages)
+                // setData(results)
+            });
+    },)
+
 
     const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, text: string) => {
         console.log(`You clicked the chip: ${text}`)
