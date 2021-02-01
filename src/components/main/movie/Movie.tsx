@@ -21,77 +21,11 @@ import CastItem from "./CastItem";
 import ImageCard from "./ImageCard";
 import {a11yProps, TabPanel} from "../main";
 import Divider from "@material-ui/core/Divider";
-import {getMovie, MovieDetailsType} from "../../../api/API";
+import {getKeyWords, getMovie, MovieDetailsType, MovieKeywordsType} from "../../../api/API";
 import {useHttpClient} from "../../../hooks/http-hook";
 import {useParams} from 'react-router-dom';
 
 const IMAGES_URL = 'https://image.tmdb.org/t/p/w500';
-
-const keyWords = {
-    "id": 550,
-    "keywords": [
-        {
-            "id": 818,
-            "name": "based on novel or book"
-        },
-        {
-            "id": 825,
-            "name": "support group"
-        },
-        {
-            "id": 851,
-            "name": "dual identity"
-        },
-        {
-            "id": 1541,
-            "name": "nihilism"
-        },
-        {
-            "id": 1721,
-            "name": "fight"
-        },
-        {
-            "id": 3927,
-            "name": "rage and hate"
-        },
-        {
-            "id": 4142,
-            "name": "insomnia"
-        },
-        {
-            "id": 4565,
-            "name": "dystopia"
-        },
-        {
-            "id": 9181,
-            "name": "alter ego"
-        },
-        {
-            "id": 34117,
-            "name": "cult film"
-        },
-        {
-            "id": 156761,
-            "name": "split personality"
-        },
-        {
-            "id": 179173,
-            "name": "quitting a job"
-        },
-        {
-            "id": 212803,
-            "name": "dissociative identity disorder"
-        },
-        {
-            "id": 249899,
-            "name": "graphic violence"
-        },
-        {
-            "id": 260426,
-            "name": "self destructiveness"
-        }
-    ]
-}
 
 const credits = {
     "id": 550,
@@ -4058,7 +3992,9 @@ function Movie() {
     const [movieId, setMovieId] = useState(+id);
     const {sendRequest} = useHttpClient();
     const [data, setData] = useState<MovieDetailsType>({} as MovieDetailsType);
-    console.log('data', data);
+    // const [credits, setCredits] = useState<MovieCreditsType>([])
+    const [keywords, setKeywords] = useState<MovieKeywordsType>({} as MovieKeywordsType)
+    // const [images, setImages] = useState<MovieImagesType>([])
 
     useEffect(() => {
         setMovieId(+id);
@@ -4068,6 +4004,33 @@ function Movie() {
             });
     }, [id, sendRequest])
 
+    useEffect(() => {
+        setMovieId(+id);
+        getKeyWords(sendRequest, movieId)
+            .then((response) => {
+                console.log(response)
+                // setKeywords(response)
+            });
+    }, [id, sendRequest])
+
+    // useEffect(() => {
+    //     setMovieId(+id);
+    //     getCredits(sendRequest, movieId)
+    //         .then((response) => {
+    //             setCredits(response)
+    //         });
+    // }, [id, sendRequest])
+    //
+    //
+    //
+    // useEffect(() => {
+    //     setMovieId(+id);
+    //     getImages(sendRequest, movieId)
+    //         .then((response) => {
+    //             setImages(response)
+    //         });
+    // }, [id, sendRequest])
+
 
     const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, text: string) => {
         console.log(`You clicked the chip: ${text}`)
@@ -4076,6 +4039,7 @@ function Movie() {
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
     };
+
     const useStyles = makeStyles((theme: Theme) => ({
         root: {
             backgroundColor: theme.palette.primary.main,
@@ -4252,12 +4216,14 @@ function Movie() {
                 </Box>
 
                 <Box component={'div'}>
-                    Keywords: {keyWords.keywords.map(kw => kw.name)
-                    .map((text, i) =>
-                        <Chip size={'small'}
-                              color={'secondary'} key={i}
-                              label={text}
-                              onClick={(e) => handleClick(e, text)}/>)}
+                    Keywords: {keywords.keywords
+                    ? keywords.keywords.map(kw => kw.name)
+                        .map((text, i) =>
+                            <Chip size={'small'}
+                                  color={'secondary'} key={i}
+                                  label={text}
+                                  onClick={(e) => handleClick(e, text)}/>)
+                    : '-'}
                 </Box>
             </Box>
         </Container>
