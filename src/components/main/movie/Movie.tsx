@@ -171,7 +171,7 @@ function Movie() {
                             <Typography component='h1'
                                         gutterBottom>{data.title
                                 ? data.title
-                                : '-'} ({data.release_date
+                                : '-'} ({data.original_title ? data.original_title : '-'}) ({data.release_date
                                 ? new Date(data.release_date).getFullYear()
                                 : '-'})</Typography>
                             <Typography component='h3'
