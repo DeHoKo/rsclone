@@ -49,20 +49,23 @@ function App() {
         <React.Fragment>
           <Header />
           <Switch>
-            <Route path="/signin">
+            <Route exact path="/signin">
               <SignIn />
             </Route>
-            <Route path="/signup">
+            <Route exact path="/signup">
               <SignUp />
             </Route>
-            <Route path="/">
-              <Main />
+            <Route exact path="/movies/:id">
+              <Movie />
             </Route>
-            <Route path="/movies/:id">
+            <Route exact path="/tvshows/:id">
               <Movie />
             </Route>
             <Route exact path="/movies/categories/:categoryId">
               <MoviesList />
+            </Route>
+            <Route path="/">
+               <Main />
             </Route>
           </Switch>
           <Footer />
