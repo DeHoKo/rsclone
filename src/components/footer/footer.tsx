@@ -46,12 +46,6 @@ function Footer() {
             </ListItemIcon>
             <ListItemText primary="dehoko" />
           </ListItemLink>
-          <ListItemLink href="https://github.com/desudesu410" target="_blank" rel="noopener">
-            <ListItemIcon className={classes.iconWidth}>
-              <GitHubIcon fontSize='small' />
-            </ListItemIcon>
-            <ListItemText primary="desu" />
-          </ListItemLink>
         </List>
       </Container>
     </footer>
