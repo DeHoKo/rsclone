@@ -18,6 +18,57 @@ type Configuration = {
   change_keys: string[],
 }
 
+type GenreType = {
+    id: number, name: string
+}
+
+type ProductionCompanyType = {
+    id: number,
+    logo_path: string | null,
+    name: string | null,
+    origin_country: string | null,
+}
+
+type ProductionCountryType = {
+    iso_3166_1: string | null,
+    name: string | null
+}
+
+type SpokenLanguageType = {
+    english_name: string | null,
+    iso_639_1: string | null,
+    name: string | null
+}
+
+export interface MovieDetailsType {
+    id: number,
+    adult: boolean,
+    backdrop_path: string | null,
+    belongs_to_collection?: string | null,
+    budget: number,
+    genres: GenreType[],
+    homepage: string | null,
+    imdb_id: string | null,
+    original_language: string | null,
+    original_title: string | null,
+    overview: string | null,
+    popularity: number,
+    poster_path: string | null,
+    production_companies: ProductionCompanyType[],
+    production_countries: ProductionCountryType[],
+    release_date: string,
+    revenue: string | null,
+    runtime: string | null,
+    spoken_languages: SpokenLanguageType[],
+    status: string | null,
+    tagline: string | null,
+    title: string | null,
+    video: boolean,
+    vote_average: number,
+    vote_count: number,
+}
+
+
 // interface VideoInfo {
 //   poster_path: string | null,
 //   id: number,
@@ -98,11 +149,10 @@ export async function getMovies(fetchFn: (url: string, method?: string, body?: a
   }
 }
 
-export async function getMovie(fetchFn: (url: string, method?: string,body?: any, headers?: any) => Promise<any>,movieId: number){
-   debugger
+export async function getMovie(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>, movieId: number) {
     try {
         return await fetchFn(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_THE_MOVIE_DB_API_KEY}`)
-    }catch (e){
+    } catch (e) {
         throw new Error('Something went wrong');
     }
 }
