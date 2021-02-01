@@ -78,6 +78,42 @@ export interface MovieKeywordsType {
     keywords: KeywordType[]
 }
 
+type CastItemType = {
+    id: number,
+    gender: number,
+    adult: boolean,
+    known_for_department: string | null,
+    name: string | null,
+    original_name: string | null,
+    popularity: number,
+    profile_path: string | null,
+    cast_id: number,
+    character: string | null,
+    credit_id: number,
+    order: number
+}
+
+export interface MovieCreditsType {
+    id: number,
+    cast: CastItemType[]
+}
+
+type BackdropItemType = {
+    "aspect_ratio": number,
+    "file_path": string | null,
+    "height": number,
+    "iso_639_1": string | null,
+    "vote_average": number,
+    "vote_count": number,
+    "width": number
+}
+
+export interface MovieImagesType {
+    id: number,
+    backdrops: BackdropItemType[],
+    posters: BackdropItemType[]
+}
+
 // interface VideoInfo {
 //   poster_path: string | null,
 //   id: number,
@@ -177,20 +213,21 @@ export async function getKeyWords(fetchFn: (url: string, method?: string, body?:
     }
 }
 
-// export async function getCredits(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>, movieId: number) {
-//     try {
-//         return await fetchFn(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${process.env.REACT_APP_THE_MOVIE_DB_API_KEY}`)
-//     } catch (e) {
-//         throw new Error('Something went wrong');
-//     }
-// }
-//
-// export async function getImages(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>, movieId: number) {
-//     try {
-//         return await fetchFn(`https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${process.env.REACT_APP_THE_MOVIE_DB_API_KEY}`)
-//     } catch (e) {
-//         throw new Error('Something went wrong');
-//     }
-// }
+export async function getCredits(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>, movieId: number) {
+    try {
+        return await fetchFn(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${process.env.REACT_APP_THE_MOVIE_DB_API_KEY}`)
+    } catch (e) {
+        throw new Error('Something went wrong');
+    }
+}
+
+
+export async function getImages(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>, movieId: number) {
+    try {
+        return await fetchFn(`https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${process.env.REACT_APP_THE_MOVIE_DB_API_KEY}`)
+    } catch (e) {
+        throw new Error('Something went wrong');
+    }
+}
 
 
