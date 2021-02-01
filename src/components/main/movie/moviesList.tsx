@@ -12,7 +12,7 @@ import Pagination from '../../common/pagination';
 import {getMovies} from "../../../api/API";
 import {useHttpClient} from "../../../hooks/http-hook";
 import Box from '@material-ui/core/Box';
-import {NavLink as RouterLink, useParams, useRouteMatch} from "react-router-dom";
+import {NavLink as RouterLink} from "react-router-dom";
 import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const IMAGES_URL = 'https://image.tmdb.org/t/p/w500';
 
 function MoviesList() {
@@ -42,13 +41,10 @@ function MoviesList() {
 
     const [data, setData] = useState([]);
     const [count, setPagesCount] = useState(10);
-    const [movieId, setMovieId] = useState(0);
     const {sendRequest} = useHttpClient();
     // FIXME: setPage is defined but never used
     //        const [page, setPage] = useState(1)
     const page = 1;
-    // console.log('params',useParams());
-    // console.log('match',useRouteMatch());
     useEffect(() => {
         getMovies(sendRequest, 'movie', {sort_by: 'popularity.asc'}, page)
             .then((response) => {

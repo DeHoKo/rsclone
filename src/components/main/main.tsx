@@ -8,7 +8,6 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-// import Movie from "./movie/Movie";
 import MoviesList from "./movie/moviesList";
 
 interface TabPanelProps {
@@ -114,7 +113,6 @@ function Main() {
         return (
           <TabPanel key={index} value={value} index={index}>
             <MoviesList />
-            {/*<Movie key={0} />*/}
           </TabPanel>);
       })}
     </main>
