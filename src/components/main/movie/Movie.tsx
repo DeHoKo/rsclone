@@ -21,102 +21,11 @@ import CastItem from "./CastItem";
 import ImageCard from "./ImageCard";
 import {a11yProps, TabPanel} from "../main";
 import Divider from "@material-ui/core/Divider";
-import {getMovie, getMovies} from "../../../api/API";
+import {getMovie, MovieDetailsType} from "../../../api/API";
 import {useHttpClient} from "../../../hooks/http-hook";
 import {useParams} from 'react-router-dom';
 
 const IMAGES_URL = 'https://image.tmdb.org/t/p/w500';
-
-const object = {
-    "adult": false,
-    "backdrop_path": "/52AfXWuXCHn3UjD17rBruA9f5qb.jpg",
-    "belongs_to_collection": null,
-    "budget": 63000000,
-    "genres": [
-        {
-            "id": 18,
-            "name": "Drama"
-        }
-    ],
-    "homepage": "http://www.foxmovies.com/movies/fight-club",
-    "id": 550,
-    "imdb_id": "tt0137523",
-    "original_language": "en",
-    "original_title": "Fight Club",
-    "overview": "A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.",
-    "popularity": 54.72,
-    "poster_path": "/bptfVGEQuv6vDTIMVCHjJ9Dz8PX.jpg",
-    "production_companies": [
-        {
-            "id": 508,
-            "logo_path": "/7PzJdsLGlR7oW4J0J5Xcd0pHGRg.png",
-            "name": "Regency Enterprises",
-            "origin_country": "US"
-        },
-        {
-            "id": 711,
-            "logo_path": "/tEiIH5QesdheJmDAqQwvtN60727.png",
-            "name": "Fox 2000 Pictures",
-            "origin_country": "US"
-        },
-        {
-            "id": 20555,
-            "logo_path": "/hD8yEGUBlHOcfHYbujp71vD8gZp.png",
-            "name": "Taurus Film",
-            "origin_country": "DE"
-        },
-        {
-            "id": 54051,
-            "logo_path": null,
-            "name": "Atman Entertainment",
-            "origin_country": ""
-        },
-        {
-            "id": 54052,
-            "logo_path": null,
-            "name": "Knickerbocker Films",
-            "origin_country": "US"
-        },
-        {
-            "id": 25,
-            "logo_path": "/qZCc1lty5FzX30aOCVRBLzaVmcp.png",
-            "name": "20th Century Fox",
-            "origin_country": "US"
-        },
-        {
-            "id": 4700,
-            "logo_path": "/A32wmjrs9Psf4zw0uaixF0GXfxq.png",
-            "name": "The Linson Company",
-            "origin_country": ""
-        }
-    ],
-    "production_countries": [
-        {
-            "iso_3166_1": "DE",
-            "name": "Germany"
-        },
-        {
-            "iso_3166_1": "US",
-            "name": "United States of America"
-        }
-    ],
-    "release_date": "1999-10-15",
-    "revenue": 100853753,
-    "runtime": 139,
-    "spoken_languages": [
-        {
-            "english_name": "English",
-            "iso_639_1": "en",
-            "name": "English"
-        }
-    ],
-    "status": "Released",
-    "tagline": "Mischief. Mayhem. Soap.",
-    "title": "Fight Club",
-    "video": false,
-    "vote_average": 8.4,
-    "vote_count": 20846
-}
 
 const keyWords = {
     "id": 550,
@@ -4138,13 +4047,40 @@ const images = {
     ]
 }
 
+export interface MovieParamsType {
+    id: string;
+}
+
 function Movie() {
-    debugger
+    const {id} = useParams<MovieParamsType>();
+
+    const [value, setValue] = useState(0);
+    const [movieId, setMovieId] = useState(+id);
+    const {sendRequest} = useHttpClient();
+    const [data, setData] = useState<MovieDetailsType>({} as MovieDetailsType);
+    console.log('data', data);
+
+    useEffect(() => {
+        setMovieId(+id);
+        getMovie(sendRequest, movieId)
+            .then((response) => {
+                setData(response)
+            });
+    }, [id, sendRequest])
+
+
+    const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, text: string) => {
+        console.log(`You clicked the chip: ${text}`)
+    }
+
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+        setValue(newValue);
+    };
     const useStyles = makeStyles((theme: Theme) => ({
         root: {
             backgroundColor: theme.palette.primary.main,
             display: 'flex',
-            backgroundImage: `url(${IMAGES_URL}${object.backdrop_path})`,
+            backgroundImage: `url(${IMAGES_URL}${data.backdrop_path})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             // zIndex: theme.zIndex.drawer + 1,
@@ -4202,64 +4138,48 @@ function Movie() {
             fontSize: 14,
         },
     }));
-
     const classes = useStyles();
-    const [value, setValue] = useState(0);
-    const [movieId, setMovieId] = useState(0);
-    const {sendRequest} = useHttpClient();
-    console.log('params',useParams());
-    useEffect(() => {
-        getMovie(sendRequest, movieId)
-            .then((response) => {
-                console.log(response)
-                // const {results, total_pages} = response;
-                // setPagesCount(total_pages)
-                // setData(results)
-            });
-    },)
-
-
-    const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, text: string) => {
-        console.log(`You clicked the chip: ${text}`)
-    }
-
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue);
-    };
-
     return (
         <Container maxWidth="xl">
             <Box component={'div'}>
                 <Box component={'div'} className={classes.root}>
                     <Box component={'div'}>
                         <CardMedia className={classes.movieImage} component={'img'}
-                                   image={`${IMAGES_URL}${object.poster_path}`}/>
+                                   image={`${IMAGES_URL}${data.poster_path}`}/>
                     </Box>
                     <Divider className={classes.divider} orientation="vertical" flexItem/>
                     <Box component={'div'}>
                         <Box component={'div'}>
                             <Typography component='h1'
-                                        gutterBottom>{object.title} ({new Date(object.release_date).getFullYear()})</Typography>
+                                        gutterBottom>{data.title
+                                ? data.title
+                                : '-'} ({data.release_date
+                                ? new Date(data.release_date).getFullYear()
+                                : '-'})</Typography>
                             <Typography component='h3'
-                                        gutterBottom>{object.release_date} ({object.production_countries.map((pc) => pc.iso_3166_1).join()})
+                                        gutterBottom>{data.release_date
+                                ? data.release_date : '-'} ({
+                                data.production_countries
+                                    ? data.production_countries.map((pc) => pc.iso_3166_1).join()
+                                    : '-'})
                             </Typography>
                             <Typography component='div'
-                                        gutterBottom>{object.genres.map(g => g.name).join()}</Typography>
+                                        gutterBottom>{data.genres ? data.genres.map(g => g.name).join() : '-'}</Typography>
                             <Typography
                                 component='div'
-                                gutterBottom>{object.runtime} min</Typography>
+                                gutterBottom>{data.runtime} min</Typography>
                             <Typography
                                 component='div'
-                                gutterBottom>{object.status}</Typography>
+                                gutterBottom>{data.status}</Typography>
                         </Box>
                         <Box component={'div'} className={classes.vote}>
                             <Typography className={classes.vote_average} component='div'
-                                        gutterBottom>{object.vote_average}</Typography>
+                                        gutterBottom>{data.vote_average}</Typography>
                             <Typography className={classes.vote_count} component='div'
-                                        gutterBottom>{object.vote_count}</Typography>
+                                        gutterBottom>{data.vote_count}</Typography>
                         </Box>
-                        <Typography component='h2' gutterBottom>{object.tagline}</Typography>
-                        <Typography component='p' gutterBottom>{object.overview}</Typography>
+                        <Typography component='h2' gutterBottom>{data.tagline}</Typography>
+                        <Typography component='p' gutterBottom>{data.overview}</Typography>
                     </Box>
                 </Box>
                 <Box component={'div'}>
@@ -4278,14 +4198,14 @@ function Movie() {
                 <Box component={'div'}>
                     Production companies:
                     <List className={classes.customList}>
-                        {object.production_companies.map((pc, i) =>
+                        {data.production_companies ? data.production_companies.map((pc, i) =>
                             <ListItem key={i} className={classes.listItem}>
                                 <ListItemAvatar>
                                     {pc.logo_path ? <Avatar src={`${IMAGES_URL}${pc.logo_path}`}/> : <ImageIcon/>}
                                 </ListItemAvatar>
                                 <ListItemText primary={`${pc.name}`} secondary={`${pc.origin_country}`}/>
                             </ListItem>
-                        )}
+                        ) : '-'}
                     </List>
                 </Box>
                 <Box component={'div'}>
