@@ -95,7 +95,8 @@ type CastItemType = {
 
 export interface MovieCreditsType {
     id: number,
-    cast: CastItemType[]
+    cast: CastItemType[],
+    crew: CastItemType[]
 }
 
 type BackdropItemType = {
