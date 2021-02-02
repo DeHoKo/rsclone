@@ -6,8 +6,8 @@ type CastItemType = {
         [style: string]: string
     },
     image: string,
-    title: string,
-    subtitle: string
+    title: string | null,
+    subtitle: string | null
 }
 
 export default function CastItem({classes, image, title, subtitle}: CastItemType) {

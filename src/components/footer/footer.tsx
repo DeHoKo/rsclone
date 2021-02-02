@@ -38,7 +38,7 @@ function Footer() {
             <ListItemIcon className={classes.iconWidth}>
               <GitHubIcon fontSize='small' />
             </ListItemIcon>
-            <ListItemText primary="vlad" />
+            <ListItemText primary="vladstepway" />
           </ListItemLink>
           <ListItemLink href="https://github.com/dehoko" target="_blank" rel="noopener">
             <ListItemIcon className={classes.iconWidth}>
