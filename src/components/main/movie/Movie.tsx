@@ -56,7 +56,7 @@ function Movie() {
             .then((response) => {
                 setData(response)
             });
-    }, [id, sendRequest])
+    }, [movieId,id, sendRequest])
 
     useEffect(() => {
         setMovieId(+id);
@@ -65,7 +65,7 @@ function Movie() {
                 console.log(response)
                 setKeywords(response)
             });
-    }, [id, sendRequest])
+    }, [movieId,id, sendRequest])
 
     useEffect(() => {
         setMovieId(+id);
@@ -74,7 +74,7 @@ function Movie() {
                 console.log(response)
                 setCredits(response)
             });
-    }, [id, sendRequest])
+    }, [movieId,id, sendRequest])
 
     useEffect(() => {
         setMovieId(+id);
@@ -83,7 +83,7 @@ function Movie() {
                 console.log(response)
                 setImages(response)
             });
-    }, [id, sendRequest])
+    }, [movieId,id, sendRequest])
 
 
     const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, text: string) => {
