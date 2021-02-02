@@ -56,7 +56,7 @@ function Movie() {
             .then((response) => {
                 setData(response)
             });
-    }, [movieId,id, sendRequest])
+    }, [movieId, id, sendRequest])
 
     useEffect(() => {
         setMovieId(+id);
@@ -65,7 +65,7 @@ function Movie() {
                 console.log(response)
                 setKeywords(response)
             });
-    }, [movieId,id, sendRequest])
+    }, [movieId, id, sendRequest])
 
     useEffect(() => {
         setMovieId(+id);
@@ -74,7 +74,7 @@ function Movie() {
                 console.log(response)
                 setCredits(response)
             });
-    }, [movieId,id, sendRequest])
+    }, [movieId, id, sendRequest])
 
     useEffect(() => {
         setMovieId(+id);
@@ -83,7 +83,7 @@ function Movie() {
                 console.log(response)
                 setImages(response)
             });
-    }, [movieId,id, sendRequest])
+    }, [movieId, id, sendRequest])
 
 
     const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, text: string) => {
@@ -204,6 +204,19 @@ function Movie() {
                     Cast:
                     <List className={classes.customList}>
                         {credits.cast ? credits.cast.map((c, i) =>
+                            <ListItem key={i} className={classes.listItem}>
+                                <CastItem classes={classes}
+                                          image={c.profile_path ? `${IMAGES_URL}${c.profile_path}` : ''}
+                                          title={c.name}
+                                          subtitle={c.character}/>
+                            </ListItem>
+                        ) : '-'}
+                    </List>
+                </Box>
+                <Box component={'div'}>
+                    Crew:
+                    <List className={classes.customList}>
+                        {credits.crew ? credits.crew.map((c, i) =>
                             <ListItem key={i} className={classes.listItem}>
                                 <CastItem classes={classes}
                                           image={c.profile_path ? `${IMAGES_URL}${c.profile_path}` : ''}
