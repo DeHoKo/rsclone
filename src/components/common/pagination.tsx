@@ -7,7 +7,7 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
 interface PaginationPropsType{
     count: number,
-    // onPageChange: (pageNumber: number) => void;
+    onPageChange: (e: React.ChangeEvent<unknown>, pageNumber: number) => void;
 }
 
 const useStyles = makeStyles(
@@ -21,7 +21,7 @@ const useStyles = makeStyles(
     }),
 );
 
-function PaginationLink({ count = 10, }:PaginationPropsType) {
+function PaginationLink({ count = 10,onPageChange }:PaginationPropsType) {
   const classes = useStyles();
 
   return (
@@ -34,7 +34,7 @@ function PaginationLink({ count = 10, }:PaginationPropsType) {
             className={classes.pagination}
             page={page}
             count={count}
-            // onChange={onPageChange}
+            onChange={onPageChange}
             renderItem={(item) => (
               <PaginationItem
                 component={Link}
