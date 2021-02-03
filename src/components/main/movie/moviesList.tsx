@@ -5,7 +5,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Pagination from '../../common/pagination';
@@ -27,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
     },
     cardMedia: {
         // paddingTop" '150%', // 3:2
-        paddingTop: '150%',
     },
     cardContent: {
         flexGrow: 1,
@@ -35,25 +33,41 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const IMAGES_URL = 'https://image.tmdb.org/t/p/w500';
+const sections: { [index: string]: any } =
+    {
+        0: 'popularity.desc',
+        1: 'vote_average.desc',
+        2: 'revenue.desc',
+        3: 'vote_count.desc',
+        4: 'release_date.desc'
+    }
 
-function MoviesList() {
+type SectionType = {
+    sectionType: number, movieType: 'movie' | 'tv'
+}
+
+function MoviesList({sectionType, movieType}: SectionType) {
     const classes = useStyles();
 
     const [data, setData] = useState([]);
     const [count, setPagesCount] = useState(10);
     const {sendRequest} = useHttpClient();
+    const [tabIndex, setTabIndex] = useState(0);
+
     // FIXME: setPage is defined but never used
     //        const [page, setPage] = useState(1)
     const page = 1;
     useEffect(() => {
-        getMovies(sendRequest, 'movie', {sort_by: 'popularity.asc'}, page)
+        setTabIndex(sectionType);
+        const queryParam = sections[tabIndex];
+        getMovies(sendRequest, movieType, {sort_by: queryParam}, page)
             .then((response) => {
                 console.log(response)
                 const {results, total_pages} = response;
                 setPagesCount(total_pages)
                 setData(results)
             });
-    }, [page, sendRequest])
+    }, [page, tabIndex, sectionType, sendRequest])
 
     return (
         <Container className={classes.cardGrid} maxWidth="lg">
@@ -68,9 +82,12 @@ function MoviesList() {
                                 title="Image title"
                             />
                             <CardContent className={classes.cardContent}>
-                                <Typography gutterBottom variant="h5" component="h2">
+                                <Box component="h2"
+                                     textOverflow="ellipsis"
+                                     overflow="hidden"
+                                     whiteSpace='nowrap'>
                                     {card['title']}
-                                </Typography>
+                                </Box>
                                 <Box
                                     component="p"
                                     textOverflow="ellipsis"

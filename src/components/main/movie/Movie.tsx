@@ -140,7 +140,9 @@ function Movie() {
             padding: '1rem 1.5rem 1rem',
         },
         cardImage: {
-            height: 200
+            height: 200,
+            // paddingLeft:15,
+            // paddingRight:15,
         },
         title: {
             fontFamily: 'Keania One',
@@ -173,7 +175,7 @@ function Movie() {
                                 ? data.title
                                 : '-'} ({data.original_title ? data.original_title : '-'}) ({data.release_date
                                 ? new Date(data.release_date).getFullYear()
-                                : '-'})</Typography>
+                                : '-'}) {data.adult ? '18+' : ''}</Typography>
                             <Typography component='h3'
                                         gutterBottom>{data.release_date
                                 ? data.release_date : '-'} ({
@@ -201,7 +203,7 @@ function Movie() {
                     </Box>
                 </Box>
                 <Box component={'div'}>
-                    Cast:
+                    <Typography component={'p'}>Cast:</Typography>
                     <List className={classes.customList}>
                         {credits.cast ? credits.cast.map((c, i) =>
                             <ListItem key={i} className={classes.listItem}>
@@ -214,7 +216,7 @@ function Movie() {
                     </List>
                 </Box>
                 <Box component={'div'}>
-                    Crew:
+                    <Typography component={'p'}>Crew:</Typography>
                     <List className={classes.customList}>
                         {credits.crew ? credits.crew.map((c, i) =>
                             <ListItem key={i} className={classes.listItem}>
@@ -227,20 +229,21 @@ function Movie() {
                     </List>
                 </Box>
                 <Box component={'div'}>
-                    Production companies:
+                    <Typography component={'p'}>Production companies:</Typography>
                     <List className={classes.customList}>
                         {data.production_companies ? data.production_companies.map((pc, i) =>
                             <ListItem key={i} className={classes.listItem}>
                                 <ListItemAvatar>
                                     {pc.logo_path ? <Avatar src={`${IMAGES_URL}${pc.logo_path}`}/> : <ImageIcon/>}
                                 </ListItemAvatar>
-                                <ListItemText primary={`${pc.name}`} secondary={`${pc.origin_country}`}/>
+                                <ListItemText color={'primary'} primary={`${pc.name}`}
+                                              secondary={`${pc.origin_country}`}/>
                             </ListItem>
                         ) : '-'}
                     </List>
                 </Box>
                 <Box component={'div'}>
-                    Media:
+                    <Typography component={'p'}>Media:</Typography>
                     <AppBar position="static" color="default">
                         <Tabs
                             value={value}
@@ -256,43 +259,48 @@ function Movie() {
                         </Tabs>
                     </AppBar>
                     <TabPanel value={value} index={0}>
-                        Backdrops:
+                        <Typography component={'p'}>Backdrops:</Typography>
                         <List component={'ul'} className={classes.customList}>
                             {images.backdrops ? images.backdrops.map((b, i) =>
-                                <ImageCard key={i}
-                                           classes={classes}
-                                           aspect_ratio={b.aspect_ratio}
-                                           file_path={b.file_path ? `${IMAGES_URL}${b.file_path}` : ''}
-                                           height={b.height}
-                                           vote_average={b.vote_average}
-                                           vote_count={b.vote_count}
-                                           width={b.width}/>) : '-'}
+                                <ListItem key={i} className={classes.listItem}>
+                                    <ImageCard
+                                        classes={classes}
+                                        aspect_ratio={b.aspect_ratio}
+                                        file_path={b.file_path ? `${IMAGES_URL}${b.file_path}` : ''}
+                                        height={b.height}
+                                        vote_average={b.vote_average}
+                                        vote_count={b.vote_count}
+                                        width={b.width}/>
+                                </ListItem>) : '-'}
                         </List>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                        Posters:
+                        <Typography component={'p'}>Posters:</Typography>
                         <List component={'ul'} className={classes.customList}>
                             {images.posters ? images.posters.map((p, i) =>
-                                <ImageCard key={i} classes={classes}
-                                           aspect_ratio={p.aspect_ratio}
-                                           file_path={p.file_path ? `${IMAGES_URL}${p.file_path}` : ''}
-                                           height={p.height}
-                                           vote_average={p.vote_average}
-                                           vote_count={p.vote_count}
-                                           width={p.width}/>) : '-'}
+                                <ListItem key={i} className={classes.listItem}>
+                                    <ImageCard classes={classes}
+                                               aspect_ratio={p.aspect_ratio}
+                                               file_path={p.file_path ? `${IMAGES_URL}${p.file_path}` : ''}
+                                               height={p.height}
+                                               vote_average={p.vote_average}
+                                               vote_count={p.vote_count}
+                                               width={p.width}/>
+                                </ListItem>) : '-'}
                         </List>
                     </TabPanel>
                 </Box>
 
                 <Box component={'div'}>
-                    Keywords: {keywords.keywords
-                    ? keywords.keywords.map(kw => kw.name)
-                        .map((text, i) =>
-                            <Chip size={'small'}
-                                  color={'secondary'} key={i}
-                                  label={text}
-                                  onClick={(e) => handleClick(e, text)}/>)
-                    : '-'}
+                    <Typography component={'p'}>Keywords:</Typography>
+                    {keywords.keywords
+                        ? keywords.keywords.map(kw => kw.name)
+                            .map((text, i) =>
+                                <Chip size={'small'}
+                                      color={'secondary'} key={i}
+                                      label={text}
+                                      onClick={(e) => handleClick(e, text)}/>)
+                        : '-'}
                 </Box>
             </Box>
         </Container>
