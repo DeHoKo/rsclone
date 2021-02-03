@@ -53,10 +53,12 @@ function MoviesList({sectionType, movieType}: SectionType) {
     const [count, setPagesCount] = useState(10);
     const {sendRequest} = useHttpClient();
     const [tabIndex, setTabIndex] = useState(0);
-
+    const [page, setPage] = useState(1);
+    const handleChangePage = (e: React.ChangeEvent<unknown>, pageNumber: number) => {
+        setPage(pageNumber)
+    }
     // FIXME: setPage is defined but never used
     //        const [page, setPage] = useState(1)
-    const page = 1;
     useEffect(() => {
         setTabIndex(sectionType);
         const queryParam = sections[tabIndex];
@@ -113,7 +115,7 @@ function MoviesList({sectionType, movieType}: SectionType) {
                     </Grid>
                 ))}
             </Grid>
-            <Pagination count={count}/>
+            <Pagination count={count} onPageChange={handleChangePage}/>
         </Container>
     );
 }
