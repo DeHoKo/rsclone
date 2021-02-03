@@ -61,7 +61,7 @@ function Drawer() {
                 </ListItem>
                 <ListItem button>
                     <ListItemIcon><CallMadeIcon/></ListItemIcon>
-                    <Link component={RouterLink} to="/">
+                    <Link component={RouterLink} to="/tv">
                         <ListItemText primary='TV shows'/>
                     </Link>
                 </ListItem>

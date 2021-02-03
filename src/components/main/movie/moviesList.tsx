@@ -43,7 +43,7 @@ const sections: { [index: string]: any } =
     }
 
 type SectionType = {
-    sectionType: number, movieType: 'movie' | 'tv'
+    sectionType: number, movieType: string
 }
 
 function MoviesList({sectionType, movieType}: SectionType) {
@@ -60,14 +60,15 @@ function MoviesList({sectionType, movieType}: SectionType) {
     useEffect(() => {
         setTabIndex(sectionType);
         const queryParam = sections[tabIndex];
+
         getMovies(sendRequest, movieType, {sort_by: queryParam}, page)
             .then((response) => {
-                console.log(response)
+
                 const {results, total_pages} = response;
                 setPagesCount(total_pages)
                 setData(results)
             });
-    }, [page, tabIndex, sectionType, sendRequest])
+    }, [movieType, page, tabIndex, sectionType, sendRequest])
 
     return (
         <Container className={classes.cardGrid} maxWidth="lg">
@@ -86,7 +87,7 @@ function MoviesList({sectionType, movieType}: SectionType) {
                                      textOverflow="ellipsis"
                                      overflow="hidden"
                                      whiteSpace='nowrap'>
-                                    {card['title']}
+                                    {movieType.includes('tv') ? card['name'] : card['title']}
                                 </Box>
                                 <Box
                                     component="p"
@@ -100,7 +101,7 @@ function MoviesList({sectionType, movieType}: SectionType) {
                             </CardContent>
                             <CardActions>
                                 <Button size="small" color="primary">
-                                    <Link component={RouterLink} to={`/movies/${card['id']}`}>
+                                    <Link component={RouterLink} to={`/${movieType}/${card['id']}`}>
                                         View
                                     </Link>
                                 </Button>

@@ -7,7 +7,7 @@ import Footer from './components/footer/footer';
 import SignUp from './components/auth/signup';
 import SignIn from './components/auth/signin';
 import LoadScreen from './components/common/loadScreen';
-import Movie from "./components/main/movie/Movie";
+import MovieContainer from "./components/main/movie/MovieContainer";
 
 import {AuthContext} from './context/auth-context';
 import {useAuth} from './hooks/auth-hook';
@@ -65,11 +65,14 @@ function App() {
                             <Route exact path="/signup">
                                 <SignUp/>
                             </Route>
-                            <Route exact path="/movies/:id">
-                                <Movie/>
+                            <Route exact path="/movie/:id">
+                                <MovieContainer/>
                             </Route>
-                            <Route exact path="/tvshows/:id">
-                                <Movie/>
+                            <Route exact path="/tv/:id">
+                                <MovieContainer/>
+                            </Route>
+                            <Route path="/tv">
+                                <Main/>
                             </Route>
                             <Route path="/">
                                 <Main/>

@@ -39,33 +39,82 @@ type SpokenLanguageType = {
     iso_639_1: string | null,
     name: string | null
 }
+type CreatedByType = {
+    id: number, name: string
+}
 
-export interface MovieDetailsType {
+type NetworkType = {
+    name: string,
     id: number,
-    adult: boolean,
+    logo_path: string | null,
+    origin_country: string
+}
+
+type SeasonType = {
+    air_date: string,
+    episode_count: number,
+    id: number,
+    name: string,
+    poster_path: string | null,
+    season_number: number
+}
+
+interface CommonType {
+    id: number,
     backdrop_path: string | null,
-    belongs_to_collection?: string | null,
-    budget: number,
     genres: GenreType[],
     homepage: string | null,
-    imdb_id: string | null,
     original_language: string | null,
-    original_title: string | null,
     overview: string | null,
-    popularity: number,
-    poster_path: string | null,
     production_companies: ProductionCompanyType[],
     production_countries: ProductionCountryType[],
-    release_date: string,
-    revenue: string | null,
-    runtime: string | null,
     spoken_languages: SpokenLanguageType[],
     status: string | null,
     tagline: string | null,
-    title: string | null,
-    video: boolean,
     vote_average: number,
     vote_count: number,
+    popularity: number,
+    poster_path: string | null,
+}
+
+type EpisodeType = {
+    air_date: string | null,
+    episode_number: number,
+    id: number,
+    name: string,
+    season_number: number,
+    still_path: string | null,
+    vote_average: number,
+    vote_count: number,
+    overview: string | null
+}
+
+export interface TVDetailsType extends CommonType {
+    created_by: CreatedByType[],
+    in_production: boolean,
+    name: string,
+    networks: NetworkType[],
+    number_of_episodes: number,
+    number_of_seasons: number,
+    seasons: SeasonType[],
+    type: string,
+    original_name: string,
+    first_air_date: string | null,
+    next_episode_to_air: EpisodeType,
+    last_episode_to_air: EpisodeType,
+}
+
+export interface MovieDetailsType extends CommonType {
+    adult: boolean,
+    belongs_to_collection?: string | null,
+    budget: number,
+    imdb_id: string | null,
+    original_title: string | null,
+    release_date: string,
+    revenue: string | null,
+    runtime: string | null,
+    title: string | null,
+    video: boolean,
 }
 
 type KeywordType = {
@@ -179,7 +228,7 @@ export async function getConfiguration(fetchFn: (url: string, method?: string, b
 }
 
 // FIXME: fix any
-export async function getMovies(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>, type: 'movie' | 'tv', query?: QueryParametersMovies | QueryParametersTVShows, page = 1) {
+export async function getMovies(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>, type: string, query?: QueryParametersMovies | QueryParametersTVShows, page = 1) {
     let queryString = '';
     if (query) {
         queryString = Object.entries(query).reduce((acc, el) => `${acc}&${el.join('=')}`, '');
@@ -198,34 +247,34 @@ export async function getMovies(fetchFn: (url: string, method?: string, body?: a
     }
 }
 
-export async function getMovie(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>, movieId: number) {
+export async function getMovie(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>, movieId: number, movieType: string) {
     try {
-        return await fetchFn(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_THE_MOVIE_DB_API_KEY}`)
+        return await fetchFn(`https://api.themoviedb.org/3/${movieType}/${movieId}?api_key=${process.env.REACT_APP_THE_MOVIE_DB_API_KEY}`)
     } catch (e) {
         throw new Error('Something went wrong');
     }
 }
 
-export async function getKeyWords(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>, movieId: number) {
+export async function getKeyWords(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>, movieId: number, movieType: string) {
     try {
-        return await fetchFn(`https://api.themoviedb.org/3/movie/${movieId}/keywords?api_key=${process.env.REACT_APP_THE_MOVIE_DB_API_KEY}`)
+        return await fetchFn(`https://api.themoviedb.org/3/${movieType}/${movieId}/keywords?api_key=${process.env.REACT_APP_THE_MOVIE_DB_API_KEY}`)
     } catch (e) {
         throw new Error('Something went wrong');
     }
 }
 
-export async function getCredits(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>, movieId: number) {
+export async function getCredits(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>, movieId: number, movieType: string) {
     try {
-        return await fetchFn(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${process.env.REACT_APP_THE_MOVIE_DB_API_KEY}`)
+        return await fetchFn(`https://api.themoviedb.org/3/${movieType}/${movieId}/credits?api_key=${process.env.REACT_APP_THE_MOVIE_DB_API_KEY}`)
     } catch (e) {
         throw new Error('Something went wrong');
     }
 }
 
 
-export async function getImages(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>, movieId: number) {
+export async function getImages(fetchFn: (url: string, method?: string, body?: any, headers?: any) => Promise<any>, movieId: number, movieType: string) {
     try {
-        return await fetchFn(`https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${process.env.REACT_APP_THE_MOVIE_DB_API_KEY}`)
+        return await fetchFn(`https://api.themoviedb.org/3/${movieType}/${movieId}/images?api_key=${process.env.REACT_APP_THE_MOVIE_DB_API_KEY}`)
     } catch (e) {
         throw new Error('Something went wrong');
     }

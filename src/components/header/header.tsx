@@ -140,7 +140,7 @@ function Header({themeState, onThemeChange}: any) {
                     <Drawer/>
                     <Typography className={classes.title} variant="h6" noWrap>
                         <Link className={classes.titleLink} component={RouterLink} to="/">
-                            Movies
+                            Home
                         </Link>
                     </Typography>
                     <div className={classes.search}>

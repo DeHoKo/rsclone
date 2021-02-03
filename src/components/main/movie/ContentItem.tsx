@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card, CardActionArea, CardContent, CardMedia, Typography} from "@material-ui/core";
 
-type CastItemType = {
+type ContentItemType = {
     classes: {
         [style: string]: string
     },
@@ -10,7 +10,7 @@ type CastItemType = {
     subtitle: string | null
 }
 
-export default function CastItem({classes, image, title, subtitle}: CastItemType) {
+export default function ContentItem({classes, image, title, subtitle}: ContentItemType) {
     return (
         <div>
             <CardActionArea className={classes.actionArea}>
